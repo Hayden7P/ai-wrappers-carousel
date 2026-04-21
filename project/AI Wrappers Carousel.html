@@ -1116,8 +1116,14 @@
   .addict-left { background: var(--amber-bg); border-left: 4px solid var(--amber); }
   .addict-vs {
     display: flex; align-items: center; justify-content: center;
-    padding: 0 18px; font-family: var(--mono); font-size: 17px;
-    font-weight: 700; color: var(--muted); background: var(--mid);
+    padding: 0 20px; background: var(--mid);
+  }
+  .addict-vs-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2px solid var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 16px; font-weight: 700;
+    color: var(--muted); background: var(--bg); flex-shrink: 0;
   }
   .addict-label {
     font-family: var(--mono); font-size: 13px; text-transform: uppercase;
@@ -1337,7 +1343,7 @@
       <div class="addict-main">1 subscription</div>
       <div class="addict-sub">Every use case covered</div>
     </div>
-    <div class="addict-vs">vs</div>
+    <div class="addict-vs"><div class="addict-vs-circle">vs</div></div>
     <div class="addict-side addict-right">
       <div class="addict-label">AI Wrappers</div>
       <div class="addict-main">3-5 subscriptions</div>
