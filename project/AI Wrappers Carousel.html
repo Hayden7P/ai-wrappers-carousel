@@ -1096,22 +1096,37 @@
   .tier-row {
     flex: 1; min-height: 0;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 20px 32px; gap: 12px; background: var(--mid);
+    padding: 14px 28px; gap: 8px; background: var(--mid);
   }
-  .tier-row.tier-highlight { background: var(--amber-bg); border-left: 4px solid var(--amber); padding-left: 28px; }
-  .tier-meta { display: flex; align-items: baseline; gap: 16px; }
-  .tier-price { font-family: var(--mono); font-size: 40px; font-weight: 700; }
+  .tier-row.tier-highlight { background: var(--amber-bg); border-left: 4px solid var(--amber); padding-left: 24px; }
+  .tier-meta { display: flex; align-items: baseline; gap: 14px; }
+  .tier-price { font-family: var(--mono); font-size: 36px; font-weight: 700; }
   .tier-row.tier-highlight .tier-price { color: var(--amber); }
-  .tier-name { font-size: 28px; font-weight: 600; flex: 1; }
-  .tier-trap { font-family: var(--mono); font-size: 20px; text-align: right; }
+  .tier-name { font-size: 24px; font-weight: 600; flex: 1; }
+  .tier-trap { font-family: var(--mono); font-size: 19px; text-align: right; }
   .tier-row:not(.tier-highlight) .tier-trap { color: var(--muted); }
   .tier-row.tier-highlight .tier-trap { color: var(--amber); }
-  .tier-desc { font-size: 21px; color: var(--muted); line-height: 1.4; margin: 0; }
+  .tier-desc { font-size: 20px; color: var(--muted); line-height: 1.38; margin: 0; }
   .addiction-note {
-    flex-shrink: 0; margin-top: 20px; padding: 20px 28px;
-    background: var(--amber-bg); border-left: 4px solid var(--amber);
-    font-size: 21px; line-height: 1.45; color: var(--ink);
+    flex-shrink: 0; margin-top: 16px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: stretch; background: var(--mid);
   }
+  .addict-side { padding: 18px 24px; }
+  .addict-left { background: var(--amber-bg); border-left: 4px solid var(--amber); }
+  .addict-vs {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 18px; font-family: var(--mono); font-size: 17px;
+    font-weight: 700; color: var(--muted); background: var(--mid);
+  }
+  .addict-label {
+    font-family: var(--mono); font-size: 13px; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted); margin-bottom: 5px;
+  }
+  .addict-main { font-size: 24px; font-weight: 700; line-height: 1.2; }
+  .addict-left .addict-main { color: var(--amber); }
+  .addict-right .addict-main { color: var(--ink); }
+  .addict-sub { font-size: 18px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
 </style>
 </head>
 <body>
@@ -1317,7 +1332,17 @@
     </div>
   </div>
   <div class="addiction-note">
-    <strong>One direct Claude subscription covers every use case</strong> for the price of two or three wrapper plans that each cover one.
+    <div class="addict-side addict-left">
+      <div class="addict-label">Direct Claude</div>
+      <div class="addict-main">1 subscription</div>
+      <div class="addict-sub">Every use case covered</div>
+    </div>
+    <div class="addict-vs">vs</div>
+    <div class="addict-side addict-right">
+      <div class="addict-label">AI Wrappers</div>
+      <div class="addict-main">3-5 subscriptions</div>
+      <div class="addict-sub">One tool each, $300+ combined</div>
+    </div>
   </div>
 </div>
 </section>
