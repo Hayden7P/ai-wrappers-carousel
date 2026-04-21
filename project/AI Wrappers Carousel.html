@@ -710,90 +710,60 @@
     margin-top: 0;
     max-width: 900px;
   }
-  /* Cover territory-map illustration */
-  #s1 .ci-map {
+  /* Cover — abstract signal illustration */
+  #s1 .ci-signal {
     position: relative;
     margin: 16px 0 22px;
-    height: 294px;
+    height: 290px;
+    background: var(--ink);
+    overflow: hidden;
     flex-shrink: 0;
-    background: var(--mid);
-    overflow: hidden;
   }
-  #s1 .ci-zone {
+  #s1 .ci-src {
     position: absolute;
-    width: calc(50% - 1px);
-    height: calc(50% - 1px);
-    overflow: hidden;
+    left: 88px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 148px;
+    background: var(--amber);
+    z-index: 3;
+    border-radius: 3px;
   }
-  #s1 .ci-zone:nth-child(1) { top: 0;    left: 0; }
-  #s1 .ci-zone:nth-child(2) { top: 0;    right: 0; }
-  #s1 .ci-zone:nth-child(3) { bottom: 0; left: 0; }
-  #s1 .ci-zone:nth-child(4) { bottom: 0; right: 0; }
-  #s1 .ci-zlabel {
+  #s1 .ci-src::before, #s1 .ci-src::after {
+    content: '';
     position: absolute;
-    top: 10px; left: 14px;
-    font-family: var(--mono);
-    font-size: 44px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: -0.03em;
-    color: rgba(20,19,15,0.07);
-    line-height: 1;
-    user-select: none;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 22px;
+    background: var(--amber);
+    border-radius: 50%;
   }
-  #s1 .ci-zcos {
+  #s1 .ci-src::before { top: -11px; }
+  #s1 .ci-src::after  { bottom: -11px; }
+  #s1 .ci-wave {
     position: absolute;
-    top: 18px; left: 16px;
+    left: 95px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 2px solid var(--amber);
+    border-left: none;
+    border-radius: 0 999px 999px 0;
+    pointer-events: none;
+  }
+  #s1 .ci-tgts {
+    position: absolute;
+    right: 72px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 18px;
   }
-  #s1 .ci-zco {
-    font-size: 21px;
-    color: var(--muted);
-    line-height: 1.3;
-  }
-  #s1 .ci-zprod {
-    position: absolute;
-    bottom: 14px; right: 14px;
-    background: var(--amber);
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 18px;
-    font-weight: 700;
-    padding: 5px 13px;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-  #s1 .ci-rule-h {
-    position: absolute;
-    left: 0; right: 0; top: 50%;
-    height: 2px; margin-top: -1px;
-    background: var(--bg);
-    z-index: 2;
-  }
-  #s1 .ci-rule-v {
-    position: absolute;
-    top: 0; bottom: 0; left: 50%;
-    width: 2px; margin-left: -1px;
-    background: var(--bg);
-    z-index: 2;
-  }
-  #s1 .ci-hub {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 44px; height: 44px;
-    background: var(--amber);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 10;
-    box-shadow: 0 0 0 6px var(--bg);
-  }
-  #s1 .ci-hub-dot {
-    width: 14px; height: 14px;
-    background: #fff;
-    border-radius: 50%;
+  #s1 .ci-tgt {
+    border-radius: 2px;
+    background: transparent;
+    border: 1.5px solid rgba(201,125,16,0.28);
   }
 
   #s1 .stats-row {
@@ -1194,47 +1164,21 @@
   <p class="h1">$14B+ raised on AI wrappers.<br><span>Claude just entered every layer.</span></p>
   <p class="deck-sub" style="margin-bottom:30px">Platform expansion forces wrappers to evolve. Who owns real alpha, and who rents it?</p>
 
-  <!-- Territory map: 4-quadrant illustration of Claude entering every market -->
-  <div class="ci-map" aria-hidden="true">
-    <div class="ci-zone">
-      <div class="ci-zlabel">Design</div>
-      <div class="ci-zcos">
-        <span class="ci-zco">Figma</span>
-        <span class="ci-zco">Gamma</span>
-        <span class="ci-zco">Tome</span>
-      </div>
-      <div class="ci-zprod">Claude Design</div>
+  <!-- Abstract signal illustration — platform reach -->
+  <div class="ci-signal" aria-hidden="true">
+    <div class="ci-src"></div>
+    <div class="ci-wave" style="width:48px; height:88px; opacity:1"></div>
+    <div class="ci-wave" style="width:116px;height:196px;opacity:0.72"></div>
+    <div class="ci-wave" style="width:204px;height:316px;opacity:0.46"></div>
+    <div class="ci-wave" style="width:316px;height:448px;opacity:0.26"></div>
+    <div class="ci-wave" style="width:450px;height:600px;opacity:0.13"></div>
+    <div class="ci-wave" style="width:610px;height:780px;opacity:0.06"></div>
+    <div class="ci-tgts">
+      <div class="ci-tgt" style="width:14px;height:108px"></div>
+      <div class="ci-tgt" style="width:14px;height:148px"></div>
+      <div class="ci-tgt" style="width:14px;height:88px"></div>
+      <div class="ci-tgt" style="width:14px;height:128px"></div>
     </div>
-    <div class="ci-zone">
-      <div class="ci-zlabel">Workspace</div>
-      <div class="ci-zcos">
-        <span class="ci-zco">Glean</span>
-        <span class="ci-zco">Genspark</span>
-        <span class="ci-zco">Notion AI</span>
-      </div>
-      <div class="ci-zprod">Claude Cowork</div>
-    </div>
-    <div class="ci-zone">
-      <div class="ci-zlabel">Coding</div>
-      <div class="ci-zcos">
-        <span class="ci-zco">Cursor</span>
-        <span class="ci-zco">Lovable</span>
-        <span class="ci-zco">Replit</span>
-      </div>
-      <div class="ci-zprod">Claude Code</div>
-    </div>
-    <div class="ci-zone">
-      <div class="ci-zlabel">Agents</div>
-      <div class="ci-zcos">
-        <span class="ci-zco">Manus</span>
-        <span class="ci-zco">Sierra</span>
-        <span class="ci-zco">n8n</span>
-      </div>
-      <div class="ci-zprod">Managed Agents</div>
-    </div>
-    <div class="ci-rule-h"></div>
-    <div class="ci-rule-v"></div>
-    <div class="ci-hub"><div class="ci-hub-dot"></div></div>
   </div>
 
   <div class="stats-row">
