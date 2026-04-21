@@ -1090,64 +1090,19 @@
     color: var(--muted);
   }
 
-  /* ── SLIDE 4: PLATFORM ECONOMICS ───────────────── */
-  #s4 .cg-heads {
-    display: grid;
-    grid-template-columns: 130px 1fr 1fr;
-    gap: 2px;
-    margin-bottom: 4px;
+  /* ── ADDICTION ECONOMY SLIDE ────────────────────── */
+  .tiers { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .tier-row {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 32px; background: var(--mid); flex: 1;
   }
-  #s4 .cg-h {
-    font-family: var(--mono);
-    font-size: 21px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding-bottom: 6px;
-    border-bottom: 2px solid var(--border);
-  }
-  #s4 .cg-h.muted { color: var(--muted); }
-  #s4 .cg-h.red   { color: var(--red);   border-color: var(--red); }
-  #s4 .cg-h.amber { color: var(--amber); border-color: var(--amber); }
-  #s4 .compare-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-  }
-  #s4 .cg-row {
-    display: grid;
-    grid-template-columns: 130px 1fr 1fr;
-    gap: 2px;
-    flex: 1;
-  }
-  #s4 .cg-layer {
-    background: var(--ink);
-    color: var(--amber);
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #s4 .cg-wrap, #s4 .cg-direct {
-    padding: 14px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-  }
-  #s4 .cg-wrap   { background: var(--mid); }
-  #s4 .cg-direct { background: rgba(201,125,16,0.09); border-left: 2px solid var(--amber); }
-  #s4 .cg-tool   { font-size: 24px; font-weight: 600; }
-  #s4 .cg-note   { font-size: 22px; color: var(--muted); line-height: 1.35; }
-  #s4 .cg-note.red   { color: var(--red); }
-  #s4 .cg-note.amber { color: var(--amber); font-family: var(--mono); font-weight: 700; }
+  .tier-row.tier-highlight { background: var(--soft); border-left: 3px solid var(--amber); }
+  .tier-price { font-family: var(--mono); font-size: 28px; font-weight: 700; width: 120px; flex-shrink: 0; }
+  .tier-name { font-size: 26px; font-weight: 600; width: 160px; flex-shrink: 0; }
+  .tier-desc { font-size: 24px; color: var(--muted); flex: 1; line-height: 1.4; }
+  .tier-trap { font-family: var(--mono); font-size: 24px; color: var(--amber); flex-shrink: 0; width: 160px; text-align: right; line-height: 1.4; }
   .addiction-note {
-    margin-top: 20px; padding: 22px 28px;
+    margin-top: 28px; padding: 24px 32px;
     background: var(--amber-bg); border-left: 3px solid var(--amber);
     font-size: 24px; line-height: 1.5; color: var(--ink);
   }
@@ -1320,70 +1275,43 @@
 </section>
 
 
-<!-- ═══ 4: PLATFORM ECONOMICS ══════════════════════════════════════════════ -->
-<section id="s4" data-label="Platform Economics">
+<!-- ═══ 4: THE ADDICTION ECONOMY ═══════════════════════════════════════════ -->
+<section id="s4" data-label="Addiction Economy">
 <div class="slide-inner">
   <div class="label-row">
-    <span class="eyebrow">Platform economics</span>
+    <span class="eyebrow">Addiction economy</span>
     <span class="slide-num">4 / 12</span>
   </div>
-  <p class="h2">The wrapper tax.<br><em>Direct is broader and cheaper long-term.</em></p>
-  <p class="body-md" style="margin-top:12px; margin-bottom:24px">Every AI platform runs the same credit escalation model. But wrappers add their own margin on top of the underlying model. For varied usage across multiple jobs, one direct subscription covers more ground — even if credits still run out fast.</p>
-
-  <div class="cg-heads">
-    <div></div>
-    <div class="cg-h red">Via wrappers</div>
-    <div class="cg-h amber">Via Claude directly</div>
-  </div>
-  <div class="compare-grid">
-    <div class="cg-row">
-      <div class="cg-layer">Design</div>
-      <div class="cg-wrap">
-        <div class="cg-tool">Gamma · Tome · Canva AI</div>
-        <div class="cg-note red">~$12–20/mo each, separate subscription</div>
-      </div>
-      <div class="cg-direct">
-        <div class="cg-tool">Claude Design</div>
-        <div class="cg-note amber">included in Max</div>
-      </div>
+  <p class="h2">The subscription escalator.<br><em>Every platform runs it.</em></p>
+  <p class="body-md" style="margin-top:12px; margin-bottom:32px">Lovable, Cursor, Genspark, Claude — they all run the same playbook. Free hooks you, credits run out fast, upgrades feel necessary. But stacking wrapper subscriptions compounds the cost. At equivalent spend, direct Claude covers more use cases with fewer restrictions.</p>
+  <div class="tiers">
+    <div class="tier-row">
+      <div class="tier-price">$0</div>
+      <div class="tier-name">Free tier</div>
+      <div class="tier-desc">Every platform offers this. Daily limits, basic models — enough to get hooked, not enough to rely on. The same across Lovable, Genspark, Claude.</div>
+      <div class="tier-trap">Industry playbook</div>
     </div>
-    <div class="cg-row">
-      <div class="cg-layer">Coding</div>
-      <div class="cg-wrap">
-        <div class="cg-tool">Cursor · Lovable · Replit</div>
-        <div class="cg-note red">$20–40/mo each, usage caps on top</div>
-      </div>
-      <div class="cg-direct">
-        <div class="cg-tool">Claude Code</div>
-        <div class="cg-note amber">included in Max</div>
-      </div>
+    <div class="tier-row">
+      <div class="tier-price">$20–40</div>
+      <div class="tier-name">Wrapper Pro</div>
+      <div class="tier-desc">Cursor ($40), Lovable ($25), Genspark ($20) — each covers one use case. Stack three and you're at $85/mo for narrower access than one Claude plan.</div>
+      <div class="tier-trap">Per use case</div>
     </div>
-    <div class="cg-row">
-      <div class="cg-layer">Workspace</div>
-      <div class="cg-wrap">
-        <div class="cg-tool">Genspark · Glean · Notion AI</div>
-        <div class="cg-note red">$15–30/mo each, credit limits apply</div>
-      </div>
-      <div class="cg-direct">
-        <div class="cg-tool">Claude Cowork</div>
-        <div class="cg-note amber">included in Max</div>
-      </div>
+    <div class="tier-row tier-highlight">
+      <div class="tier-price">$100</div>
+      <div class="tier-name">Claude Max 5×</div>
+      <div class="tier-desc">Covers design, coding, workspace, agents in one plan. Credits still run out fast for heavy use — but no markup, no fragmentation across tools.</div>
+      <div class="tier-trap">All use cases</div>
     </div>
-    <div class="cg-row">
-      <div class="cg-layer">Agents</div>
-      <div class="cg-wrap">
-        <div class="cg-tool">Manus · Make · n8n Cloud</div>
-        <div class="cg-note red">$20–50/mo each, task-based throttling</div>
-      </div>
-      <div class="cg-direct">
-        <div class="cg-tool">Managed Agents</div>
-        <div class="cg-note amber">included in Max</div>
-      </div>
+    <div class="tier-row tier-highlight">
+      <div class="tier-price">$200</div>
+      <div class="tier-name">Claude Max 20×</div>
+      <div class="tier-desc">20× Pro limits. Power users still hit ceilings on long agent runs. But compared to equivalent wrapper spend, limits are higher and scope is broader.</div>
+      <div class="tier-trap">Still runs out</div>
     </div>
   </div>
-
   <div class="addiction-note">
-    Credits run out fast on both — Claude Max hits limits too. But at <strong>$100–200/mo, one Max plan replaces 4+ wrapper subscriptions</strong> and removes the markup layer. Wrappers still win on tailored UX and onboarding. Direct wins on breadth, flexibility, and long-run cost for power users.
+    Credits are consumed quickly everywhere — that's the model. The difference: <strong>one Claude Max subscription replaces 3–4 wrapper subscriptions</strong> and removes the markup. Wrappers win on specialized UX. Direct wins on breadth and long-run cost.
   </div>
 </div>
 </section>
