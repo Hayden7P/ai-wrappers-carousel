@@ -1091,21 +1091,26 @@
   }
 
   /* ── ADDICTION ECONOMY SLIDE ────────────────────── */
-  .tiers { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  #s4 .label-row { margin-bottom: 24px; }
+  .tiers { display: flex; flex-direction: column; gap: 4px; flex: 1; min-height: 0; }
   .tier-row {
-    display: flex; align-items: center; gap: 16px;
-    padding: 14px 22px; background: var(--mid); flex: 1;
-    min-height: 0;
+    flex: 1; min-height: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 20px 32px; gap: 12px; background: var(--mid);
   }
-  .tier-row.tier-highlight { background: var(--soft); border-left: 3px solid var(--amber); }
-  .tier-price { font-family: var(--mono); font-size: 24px; font-weight: 700; width: 100px; flex-shrink: 0; }
-  .tier-name { font-size: 24px; font-weight: 600; width: 130px; flex-shrink: 0; }
-  .tier-desc { font-size: 20px; color: var(--muted); flex: 1; line-height: 1.35; }
-  .tier-trap { font-family: var(--mono); font-size: 20px; color: var(--amber); flex-shrink: 0; width: 136px; text-align: right; line-height: 1.35; }
+  .tier-row.tier-highlight { background: var(--amber-bg); border-left: 4px solid var(--amber); padding-left: 28px; }
+  .tier-meta { display: flex; align-items: baseline; gap: 16px; }
+  .tier-price { font-family: var(--mono); font-size: 40px; font-weight: 700; }
+  .tier-row.tier-highlight .tier-price { color: var(--amber); }
+  .tier-name { font-size: 28px; font-weight: 600; flex: 1; }
+  .tier-trap { font-family: var(--mono); font-size: 20px; text-align: right; }
+  .tier-row:not(.tier-highlight) .tier-trap { color: var(--muted); }
+  .tier-row.tier-highlight .tier-trap { color: var(--amber); }
+  .tier-desc { font-size: 21px; color: var(--muted); line-height: 1.4; margin: 0; }
   .addiction-note {
-    margin-top: 16px; padding: 16px 24px;
-    background: var(--amber-bg); border-left: 3px solid var(--amber);
-    font-size: 22px; line-height: 1.45; color: var(--ink);
+    flex-shrink: 0; margin-top: 20px; padding: 20px 28px;
+    background: var(--amber-bg); border-left: 4px solid var(--amber);
+    font-size: 21px; line-height: 1.45; color: var(--ink);
   }
 </style>
 </head>
@@ -1287,22 +1292,28 @@
   <p class="body-md" style="margin-top:10px; margin-bottom:16px">Same model everywhere. The difference is what you get per euro at each tier.</p>
   <div class="tiers">
     <div class="tier-row">
-      <div class="tier-price">$0</div>
-      <div class="tier-name">Free</div>
-      <div class="tier-desc">One try at best. Hard limits make it unusable for real work. Exists to create the habit, not deliver value.</div>
-      <div class="tier-trap">Unusable</div>
+      <div class="tier-meta">
+        <span class="tier-price">$0</span>
+        <span class="tier-name">Free</span>
+        <span class="tier-trap">Unusable</span>
+      </div>
+      <p class="tier-desc">One try at best. Hard limits make it unusable for real work. The hook, not the value.</p>
     </div>
     <div class="tier-row tier-highlight">
-      <div class="tier-price">~$20/mo</div>
-      <div class="tier-name">Plus</div>
-      <div class="tier-desc">Credits last less than a day on most wrappers. At the same price, Claude covers every use case with far more runway.</div>
-      <div class="tier-trap">Claude wins here</div>
+      <div class="tier-meta">
+        <span class="tier-price">~$20/mo</span>
+        <span class="tier-name">Plus</span>
+        <span class="tier-trap">Claude wins here</span>
+      </div>
+      <p class="tier-desc">Credits last less than a day on most wrappers. Same price, Claude covers every use case with far more runway.</p>
     </div>
     <div class="tier-row tier-highlight">
-      <div class="tier-price">~$100/mo</div>
-      <div class="tier-name">Pro</div>
-      <div class="tier-desc">Credits total roughly €200 of usage. Direct Claude replaces four wrapper subscriptions at this spend, with no markup and no single-tool restriction.</div>
-      <div class="tier-trap">Claude wins more</div>
+      <div class="tier-meta">
+        <span class="tier-price">~$100/mo</span>
+        <span class="tier-name">Pro</span>
+        <span class="tier-trap">Claude wins more</span>
+      </div>
+      <p class="tier-desc">Credits equal roughly €200 of usage. Direct Claude replaces four wrapper subscriptions at this spend.</p>
     </div>
   </div>
   <div class="addiction-note">
