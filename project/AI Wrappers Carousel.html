@@ -710,61 +710,15 @@
     margin-top: 0;
     max-width: 900px;
   }
-  /* Cover — abstract signal illustration */
-  #s1 .ci-signal {
-    position: relative;
+  /* Cover — SVG fan illustration */
+  #s1 .ci-art {
     margin: 16px 0 22px;
     height: 290px;
-    background: var(--ink);
-    overflow: hidden;
     flex-shrink: 0;
+    overflow: hidden;
+    line-height: 0;
   }
-  #s1 .ci-src {
-    position: absolute;
-    left: 88px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 7px;
-    height: 148px;
-    background: var(--amber);
-    z-index: 3;
-    border-radius: 3px;
-  }
-  #s1 .ci-src::before, #s1 .ci-src::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 22px; height: 22px;
-    background: var(--amber);
-    border-radius: 50%;
-  }
-  #s1 .ci-src::before { top: -11px; }
-  #s1 .ci-src::after  { bottom: -11px; }
-  #s1 .ci-wave {
-    position: absolute;
-    left: 95px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 2px solid var(--amber);
-    border-left: none;
-    border-radius: 0 999px 999px 0;
-    pointer-events: none;
-  }
-  #s1 .ci-tgts {
-    position: absolute;
-    right: 72px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
-  #s1 .ci-tgt {
-    border-radius: 2px;
-    background: transparent;
-    border: 1.5px solid rgba(201,125,16,0.28);
-  }
+  #s1 .ci-art svg { width: 100%; height: 100%; display: block; }
 
   #s1 .stats-row {
     margin-top: auto;
@@ -1164,21 +1118,54 @@
   <p class="h1">$14B+ raised on AI wrappers.<br><span>Claude just entered every layer.</span></p>
   <p class="deck-sub" style="margin-bottom:30px">Platform expansion forces wrappers to evolve. Who owns real alpha, and who rents it?</p>
 
-  <!-- Abstract signal illustration — platform reach -->
-  <div class="ci-signal" aria-hidden="true">
-    <div class="ci-src"></div>
-    <div class="ci-wave" style="width:48px; height:88px; opacity:1"></div>
-    <div class="ci-wave" style="width:116px;height:196px;opacity:0.72"></div>
-    <div class="ci-wave" style="width:204px;height:316px;opacity:0.46"></div>
-    <div class="ci-wave" style="width:316px;height:448px;opacity:0.26"></div>
-    <div class="ci-wave" style="width:450px;height:600px;opacity:0.13"></div>
-    <div class="ci-wave" style="width:610px;height:780px;opacity:0.06"></div>
-    <div class="ci-tgts">
-      <div class="ci-tgt" style="width:14px;height:108px"></div>
-      <div class="ci-tgt" style="width:14px;height:148px"></div>
-      <div class="ci-tgt" style="width:14px;height:88px"></div>
-      <div class="ci-tgt" style="width:14px;height:128px"></div>
-    </div>
+  <!-- SVG illustration: platform trajectories fanning into the market -->
+  <div class="ci-art" aria-hidden="true">
+    <svg viewBox="0 0 1000 310" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="srcGlow" cx="9%" cy="50%" r="28%" gradientUnits="objectBoundingBox">
+          <stop offset="0%"   stop-color="#C97D10" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#C97D10" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="endGlow" cx="91%" cy="50%" r="22%" gradientUnits="objectBoundingBox">
+          <stop offset="0%"   stop-color="#C97D10" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#C97D10" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Background -->
+      <rect width="1000" height="310" fill="#14130F"/>
+      <!-- Ambient glows -->
+      <rect width="1000" height="310" fill="url(#srcGlow)"/>
+      <rect width="1000" height="310" fill="url(#endGlow)"/>
+
+      <!-- Fan of trajectories — all from source (95,155) -->
+      <path d="M95,155 Q510,82  912,18"  fill="none" stroke="#C97D10" stroke-width="1"   opacity="0.13"/>
+      <path d="M95,155 Q510,98  912,62"  fill="none" stroke="#C97D10" stroke-width="1.2" opacity="0.26"/>
+      <path d="M95,155 Q510,117 912,104" fill="none" stroke="#C97D10" stroke-width="1.6" opacity="0.46"/>
+      <path d="M95,155 Q510,138 912,133" fill="none" stroke="#C97D10" stroke-width="2"   opacity="0.70"/>
+      <path d="M95,155 Q510,155 912,155" fill="none" stroke="#C97D10" stroke-width="2.6" opacity="0.95"/>
+      <path d="M95,155 Q510,172 912,177" fill="none" stroke="#C97D10" stroke-width="2"   opacity="0.70"/>
+      <path d="M95,155 Q510,193 912,206" fill="none" stroke="#C97D10" stroke-width="1.6" opacity="0.46"/>
+      <path d="M95,155 Q510,212 912,248" fill="none" stroke="#C97D10" stroke-width="1.2" opacity="0.26"/>
+      <path d="M95,155 Q510,228 912,292" fill="none" stroke="#C97D10" stroke-width="1"   opacity="0.13"/>
+
+      <!-- Source node — concentric rings + solid core -->
+      <circle cx="95" cy="155" r="36" fill="#C97D10" fill-opacity="0.06"/>
+      <circle cx="95" cy="155" r="22" fill="#C97D10" fill-opacity="0.12"/>
+      <circle cx="95" cy="155" r="11" fill="#C97D10"/>
+
+      <!-- Target nodes where trajectories arrive -->
+      <line x1="910" y1="15" x2="910" y2="295" stroke="#C97D10" stroke-width="1" opacity="0.10"/>
+      <circle cx="912" cy="18"  r="2.5" fill="#C97D10" opacity="0.13"/>
+      <circle cx="912" cy="62"  r="3"   fill="#C97D10" opacity="0.26"/>
+      <circle cx="912" cy="104" r="4"   fill="#C97D10" opacity="0.46"/>
+      <circle cx="912" cy="133" r="5"   fill="#C97D10" opacity="0.70"/>
+      <circle cx="912" cy="155" r="6"   fill="#C97D10" opacity="0.95"/>
+      <circle cx="912" cy="177" r="5"   fill="#C97D10" opacity="0.70"/>
+      <circle cx="912" cy="206" r="4"   fill="#C97D10" opacity="0.46"/>
+      <circle cx="912" cy="248" r="3"   fill="#C97D10" opacity="0.26"/>
+      <circle cx="912" cy="292" r="2.5" fill="#C97D10" opacity="0.13"/>
+    </svg>
   </div>
 
   <div class="stats-row">
