@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Wrappers & Platform Expansion, LinkedIn Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="deck-stage.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:     #F7F4EE;
+    --ink:    #14130F;
+    --mid:    #EDEAE2;
+    --soft:   #E4E0D6;
+    --border: rgba(20,19,15,0.12);
+    --muted:  rgba(20,19,15,0.45);
+    --amber:  #C97D10;
+    --amber-bg: #FDF3E0;
+    --red:    #B91C1C;
+    --green:  #15803D;
+    --groove: 'Space Grotesk', 'Helvetica Neue', sans-serif;
+    --mono:   'Space Mono', monospace;
+  }
+
+  deck-stage section {
+    font-family: var(--groove);
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .slide-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 64px 72px 52px;
+  }
+
+  /* ── LABEL ─────────────────────────────────────── */
+  .label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 52px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 24px;
+    letter-spacing: 0.10em;
+    color: var(--amber);
+    text-transform: uppercase;
+  }
+  .slide-num {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--muted);
+  }
+
+  /* ── RULE ─────────────────────────────────────── */
+  .rule { width: 100%; height: 1px; background: var(--border); margin: 28px 0; }
+
+  /* ── TYPOGRAPHY ───────────────────────────────── */
+  .h1 {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .h2 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .h2 em { font-style: normal; color: var(--amber); }
+  .body-lg { font-size: 28px; line-height: 1.5; color: var(--muted); }
+  .body-md { font-size: 26px; line-height: 1.5; color: var(--muted); }
+
+  /* ── CHIP ─────────────────────────────────────── */
+  .chip {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .chip-amber { background: var(--amber); color: #fff; }
+  .chip-red   { background: var(--red);   color: #fff; }
+  .chip-green { background: var(--green); color: #fff; }
+  .chip-ink   { background: var(--ink);   color: var(--bg); }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 1: COVER
+  ══════════════════════════════════════════════════ */
+  #s1 .kicker {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  #s1 .h1 { margin-bottom: 24px; }
+  #s1 .h1 span { color: var(--amber); }
+  #s1 .deck-sub {
+    font-size: 30px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 0;
+    max-width: 900px;
+  }
+  /* Cover layer-stack diagram */
+  #s1 .cover-stack {
+    margin: 20px 0 28px;
+    padding: 24px 28px;
+    background: var(--mid);
+    border-left: 3px solid var(--amber);
+  }
+  #s1 .cs-claude {
+    display: flex; align-items: center; gap: 16px;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  #s1 .cs-claude-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); flex-shrink: 0;
+  }
+  #s1 .cs-claude-label {
+    font-family: var(--mono); font-size: 26px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+  }
+  #s1 .cs-claude-arrows {
+    margin-left: auto; font-family: var(--mono); font-size: 26px;
+    color: var(--amber); letter-spacing: 0.3em;
+  }
+  #s1 .cs-layers { display: flex; flex-direction: column; gap: 8px; }
+  #s1 .cs-layer {
+    display: grid; grid-template-columns: 140px 1fr auto;
+    gap: 16px; align-items: center;
+  }
+  #s1 .cs-lname {
+    font-size: 24px; font-weight: 700; color: var(--ink);
+  }
+  #s1 .cs-lco {
+    font-size: 24px; color: var(--muted);
+  }
+  #s1 .cs-lclaude {
+    font-family: var(--mono); font-size: 24px; font-weight: 700;
+    color: var(--amber); text-align: right;
+  }
+
+  #s1 .stats-row {
+    margin-top: auto;
+    padding-top: 36px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  #s1 .stat-item { padding-right: 36px; }
+  #s1 .stat-item + .stat-item { border-left: 1px solid var(--border); padding-left: 36px; padding-right: 36px; }
+  #s1 .stat-item:last-child { padding-right: 0; }
+  #s1 .stat-val { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  #s1 .stat-val.amber { color: var(--amber); }
+  #s1 .stat-val.red { color: var(--red); }
+  #s1 .stat-lbl { font-size: 24px; color: var(--muted); margin-top: 8px; line-height: 1.3; }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 2: PLATFORM EXPANSION
+  ══════════════════════════════════════════════════ */
+  .tl-list { display: flex; flex-direction: column; flex: 1; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 0 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .tl-item:first-child { border-top: 1px solid var(--border); }
+  .tl-dt {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--amber);
+    padding-top: 2px;
+  }
+  .tl-title { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 5px; }
+  .tl-desc { font-size: 24px; color: var(--muted); line-height: 1.4; }
+  .tl-tag { flex-shrink: 0; padding-top: 2px; }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 3: CREDIT ESCALATION (INDUSTRY-WIDE)
+  ══════════════════════════════════════════════════ */
+  .escalation-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+  .esc-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 26px 32px;
+    background: var(--mid);
+    flex: 1;
+  }
+  .esc-co {
+    font-size: 26px;
+    font-weight: 600;
+    width: 200px;
+    flex-shrink: 0;
+  }
+  .esc-bar-wrap { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .esc-label { font-size: 24px; color: var(--muted); }
+  .bar-track {
+    height: 10px;
+    background: rgba(20,19,15,0.10);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--amber);
+  }
+  .esc-delta {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--red);
+    flex-shrink: 0;
+    width: 100px;
+    text-align: right;
+  }
+  #s3 .note {
+    margin-top: 32px;
+    padding: 28px 32px;
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber);
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 4: BLACK MIRROR EFFECT
+  ══════════════════════════════════════════════════ */
+  #s4 .h2 { margin-bottom: 16px; }
+  .bm-ref {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--muted);
+    margin-top: 12px;
+    margin-bottom: 36px;
+  }
+  .bm-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+  .bm-step {
+    display: flex;
+    gap: 28px;
+    align-items: stretch;
+    background: var(--mid);
+    flex: 1;
+  }
+  .bm-step-n {
+    font-family: var(--mono);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--amber);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 20px 20px;
+    background: rgba(201,125,16,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 56px;
+    letter-spacing: -0.04em;
+  }
+  .bm-step-body { padding: 24px 28px; }
+  .bm-step-title { font-size: 28px; font-weight: 600; margin-bottom: 6px; }
+  .bm-step-desc { font-size: 24px; color: var(--muted); line-height: 1.4; }
+  .bm-step-ep { font-family: var(--mono); font-size: 24px; color: var(--amber); margin-top: 6px; }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 5: THE LEAK
+  ══════════════════════════════════════════════════ */
+  #s6 .leak-box {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 48px 52px;
+    margin-bottom: 32px;
+  }
+  #s6 .leak-box .lk-label {
+    font-family: var(--mono);
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  #s6 .leak-box .lk-text {
+    font-size: 30px;
+    line-height: 1.5;
+    color: rgba(247,244,238,0.92);
+  }
+  #s6 .leak-box .lk-text strong { color: var(--amber); }
+  #s6 .implications { display: flex; flex-direction: column; gap: 2px; }
+  #s6 .impl-row {
+    display: flex;
+    gap: 20px;
+    align-items: start;
+    padding: 24px 28px;
+    background: var(--mid);
+  }
+  #s6 .impl-icon { font-family: var(--mono); font-size: 24px; color: var(--amber); flex-shrink: 0; width: 30px; }
+  #s6 .impl-text { font-size: 26px; line-height: 1.4; }
+  #s6 .impl-text strong { font-weight: 600; }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 6: NOT REPLACEMENT, COMPRESSION
+  ══════════════════════════════════════════════════ */
+  #s7 .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    flex: 1;
+  }
+  #s7 .col-head {
+    padding: 28px 32px 20px;
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 2px;
+  }
+  #s7 .col-head.red { color: var(--red); border-color: var(--red); }
+  #s7 .col-head.green { color: var(--green); border-color: var(--green); }
+  #s7 .col-body { display: flex; flex-direction: column; gap: 2px; }
+  #s7 .col-item {
+    padding: 16px 24px;
+    background: var(--mid);
+    font-size: 24px;
+    line-height: 1.4;
+    flex: 1;
+  }
+  #s7 .col-item strong { font-weight: 600; display: block; margin-bottom: 4px; }
+  #s7 .col-item span { color: var(--muted); font-size: 24px; }
+  #s7 .bottom-note {
+    margin-top: 32px;
+    font-size: 26px;
+    line-height: 1.5;
+    color: var(--muted);
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  #s7 .bottom-note strong { color: var(--ink); }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 7: INVESTOR ALPHA PROBLEM
+  ══════════════════════════════════════════════════ */
+  #s8 .alpha-cases {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+  .alpha-case {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 18px 28px;
+    background: var(--mid);
+    flex: 1;
+  }
+  .alpha-case .ac-company { font-size: 28px; font-weight: 700; width: 200px; flex-shrink: 0; }
+  .alpha-case .ac-body { flex: 1; }
+  .alpha-case .ac-event { font-size: 26px; color: var(--muted); line-height: 1.35; }
+  .alpha-case .ac-impact { font-family: var(--mono); font-size: 26px; font-weight: 700; flex-shrink: 0; text-align: right; width: 140px; }
+  .alpha-case .ac-impact.red { color: var(--red); }
+  .alpha-case .ac-impact.amber { color: var(--amber); }
+  #s8 .alpha-thesis {
+    margin-top: 24px;
+    padding: 22px 28px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 24px;
+    line-height: 1.45;
+  }
+  #s8 .alpha-thesis strong { color: var(--amber); }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 8: WHAT HAS A MOAT
+  ══════════════════════════════════════════════════ */
+  #s9 .moat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    flex: 1;
+  }
+  .moat-cell {
+    background: var(--mid);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .moat-cell.strong { background: var(--ink); color: var(--bg); }
+  .moat-cell .mc-label {
+    font-family: var(--mono);
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  .moat-cell .mc-title { font-size: 26px; font-weight: 700; line-height: 1.2; }
+  .moat-cell .mc-desc { font-size: 24px; line-height: 1.4; }
+  .moat-cell.strong .mc-desc { color: rgba(247,244,238,0.65); }
+  .moat-cell:not(.strong) .mc-desc { color: var(--muted); }
+  .moat-cell .mc-ex {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--amber);
+    margin-top: 4px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 9: THE 3 PATHS
+  ══════════════════════════════════════════════════ */
+  #s10 .paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    flex: 1;
+  }
+  .path-col {
+    background: var(--mid);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .path-head {
+    padding: 20px 24px 16px;
+    border-bottom: 3px solid var(--border);
+  }
+  .path-head.p1 { border-color: var(--amber); }
+  .path-head.p2 { border-color: var(--ink); }
+  .path-head.p3 { border-color: var(--green); }
+  .path-n {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .path-title { font-size: 28px; font-weight: 700; line-height: 1.2; }
+  .path-body { padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 0; }
+  .path-points { display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+  .path-point { font-size: 24px; line-height: 1.4; color: var(--muted); }
+  .path-point strong { color: var(--ink); font-weight: 600; display: block; }
+  .path-example {
+    margin-top: auto;
+    padding: 12px 16px;
+    background: rgba(20,19,15,0.06);
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--ink);
+  }
+
+  /* ══════════════════════════════════════════════════
+     SLIDE 10: THE REAL QUESTION
+  ══════════════════════════════════════════════════ */
+  #s11 .h2 { margin-bottom: 44px; }
+  #s11 .thesis-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+  .tp {
+    display: flex;
+    gap: 24px;
+    align-items: start;
+    padding: 24px 32px;
+    background: var(--mid);
+    flex: 1;
+  }
+  .tp .tp-n {
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--amber);
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 28px;
+  }
+  .tp .tp-txt { font-size: 26px; line-height: 1.45; }
+  .tp .tp-txt strong { font-weight: 600; }
+  #s11 .closing {
+    margin-top: 36px;
+    padding: 32px 36px;
+    background: var(--ink);
+    color: var(--bg);
+    font-size: 26px;
+    line-height: 1.5;
+  }
+  #s11 .closing strong { color: var(--amber); }
+  #s11 .src {
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 24px;
+    color: var(--muted);
+  }
+
+  /* ── ADDICTION ECONOMY SLIDE ────────────────────── */
+  .tiers { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .tier-row {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 32px; background: var(--mid); flex: 1;
+  }
+  .tier-row.tier-highlight { background: var(--soft); border-left: 3px solid var(--amber); }
+  .tier-price { font-family: var(--mono); font-size: 28px; font-weight: 700; width: 120px; flex-shrink: 0; }
+  .tier-name { font-size: 26px; font-weight: 600; width: 130px; flex-shrink: 0; }
+  .tier-desc { font-size: 24px; color: var(--muted); flex: 1; line-height: 1.4; }
+  .tier-trap { font-family: var(--mono); font-size: 24px; color: var(--amber); flex-shrink: 0; width: 150px; text-align: right; line-height: 1.4; }
+  .addiction-note {
+    margin-top: 28px; padding: 24px 32px;
+    background: var(--amber-bg); border-left: 3px solid var(--amber);
+    font-size: 24px; line-height: 1.5; color: var(--ink);
+  }
+</style>
+</head>
+<body>
+<deck-stage width="1080" height="1350">
+
+<!-- ═══ 1: COVER ══════════════════════════════════════════════════════════ -->
+<section id="s1" data-label="Cover">
+<div class="slide-inner">
+  <p class="kicker">April 2026 · Industry Analysis</p>
+  <p class="h1">$14B+ raised on AI wrappers.<br><span>Claude just entered every layer.</span></p>
+  <p class="deck-sub" style="margin-bottom:30px">Platform expansion forces wrappers to evolve. Who owns real alpha, and who rents it?</p>
+
+  <!-- Layer-stack diagram: Claude entering every layer -->
+  <div class="cover-stack" aria-hidden="true">
+    <div class="cs-claude">
+      <span class="cs-claude-dot"></span>
+      <span class="cs-claude-label">Claude platform</span>
+      <span class="cs-claude-arrows">↑ ↑ ↑ ↑</span>
+    </div>
+    <div class="cs-layers">
+      <div class="cs-layer">
+        <div class="cs-lname">Design</div>
+        <div class="cs-lco">Figma · Gamma · Tome</div>
+        <div class="cs-lclaude">Claude Design</div>
+      </div>
+      <div class="cs-layer">
+        <div class="cs-lname">Workspace</div>
+        <div class="cs-lco">Glean · Genspark · Notion AI</div>
+        <div class="cs-lclaude">Claude Cowork</div>
+      </div>
+      <div class="cs-layer">
+        <div class="cs-lname">Coding</div>
+        <div class="cs-lco">Cursor · Lovable · Replit</div>
+        <div class="cs-lclaude">Claude Code</div>
+      </div>
+      <div class="cs-layer">
+        <div class="cs-lname">Agents</div>
+        <div class="cs-lco">Manus · Sierra · n8n</div>
+        <div class="cs-lclaude">Managed Agents</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-val amber">21</div>
+      <div class="stat-lbl">companies with material product overlap to Anthropic's 2026 launches</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">6</div>
+      <div class="stat-lbl">already acquired, pivoted, or absorbed since 2024</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val red">$170B</div>
+      <div class="stat-lbl">combined valuations under compression pressure</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 2: THE PLATFORM EXPANSION ════════════════════════════════════════ -->
+<section id="s2" data-label="Platform Expansion">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">What happened</span>
+    <span class="slide-num">2 / 12</span>
+  </div>
+  <p class="h2">Nine days. Four new product categories.</p>
+  <p class="body-md" style="margin-bottom:36px; margin-top:12px">The pace matters as much as the products. This is not a roadmap, it's a signal of intent.</p>
+  <div class="tl-list">
+    <div class="tl-item">
+      <div class="tl-dt">Apr 9</div>
+      <div>
+        <div class="tl-title">Claude Managed Agents</div>
+        <div class="tl-desc">Cloud-hosted agentic APIs with containers, persistent history, MCP connectors, direct overlap with n8n, Make, Zapier, Sierra</div>
+      </div>
+      <div class="tl-tag"><span class="chip chip-amber">Automation</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dt">Apr 9</div>
+      <div>
+        <div class="tl-title">Claude Cowork GA + Enterprise</div>
+        <div class="tl-desc">Agentic desktop workspace with SSO, audit logs, spend limits, Glean, Genspark, Notion AI territory</div>
+      </div>
+      <div class="tl-tag"><span class="chip chip-ink">Workspace</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dt">Apr 16</div>
+      <div>
+        <div class="tl-title">Claude Opus 4.7</div>
+        <div class="tl-desc">New flagship, leads several public coding and reasoning benchmarks as of Apr 2026. Frontier leadership flips quarterly, pace matters more than rank.</div>
+      </div>
+      <div class="tl-tag"><span class="chip chip-red">Pace</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dt">Apr 17</div>
+      <div>
+        <div class="tl-title">Claude Design</div>
+        <div class="tl-desc">Prompt-to-prototype, reportedly built with an internal Lovable-equivalent. Overlaps with Gamma, Beautiful.ai, Tome; Figma parity is years away (file format, plugins, Dev Mode).</div>
+      </div>
+      <div class="tl-tag"><span class="chip chip-amber">Design</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 3: CREDIT ESCALATION IS INDUSTRY-WIDE ════════════════════════════ -->
+<section id="s3" data-label="Credit Escalation">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Industry-wide pattern</span>
+    <span class="slide-num">3 / 12</span>
+  </div>
+  <p class="h2">Credit consumption is exploding, <em>across every platform.</em></p>
+  <p class="body-md" style="margin-top:12px; margin-bottom:36px">This isn't a Claude-specific pricing strategy. Every major AI platform is tightening limits as queries grow longer and more expensive. The economics of "flat-rate AI" are breaking down.</p>
+  <div class="escalation-grid">
+    <div class="esc-row">
+      <div class="esc-co">Genspark</div>
+      <div class="esc-bar-wrap">
+        <div class="esc-label">Credit consumption grew 10× year-over-year as Super Agent usage scaled</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      </div>
+      <div class="esc-delta">10×</div>
+    </div>
+    <div class="esc-row">
+      <div class="esc-co">Lovable</div>
+      <div class="esc-bar-wrap">
+        <div class="esc-label">Complex generations: 1.7 credits vs. 0.5 for simple edits. Usage-based cloud billing stacks on top</div>
+        <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+      <div class="esc-delta">3.4×</div>
+    </div>
+    <div class="esc-row">
+      <div class="esc-co">Manus</div>
+      <div class="esc-bar-wrap">
+        <div class="esc-label">$20/mo unlimited plan lasted less than a day before being throttled, the math never held.</div>
+        <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+      </div>
+      <div class="esc-delta">&lt; 1 day</div>
+    </div>
+    <div class="esc-row">
+      <div class="esc-co">Perplexity</div>
+      <div class="esc-bar-wrap">
+        <div class="esc-label">Shifted to usage-based pricing, premium users now pay more when they exceed credit limits</div>
+        <div class="bar-track"><div class="bar-fill" style="width:45%"></div></div>
+      </div>
+      <div class="esc-delta">↑ caps</div>
+    </div>
+  </div>
+  <div class="note">Pattern: <strong>Free → hooked → throttled → upsold.</strong> Caveat: open-weight models (Llama, Qwen, DeepSeek) are deflating inference costs on a 6-month cycle. The escalator is real on frontier platforms; it's not an industry-wide ceiling.</div>
+</div>
+</section>
+
+
+<!-- ═══ 4: THE ADDICTION ECONOMY ═══════════════════════════════════════════ -->
+<section id="s4" data-label="Addiction Economy">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Addiction economy</span>
+    <span class="slide-num">4 / 12</span>
+  </div>
+  <p class="h2">The subscription escalator.<br><em>Every platform runs it.</em></p>
+  <p class="body-md" style="margin-top:12px; margin-bottom:32px">This isn't a Claude-specific trap, it's the standard playbook across every major AI platform. Free access hooks users; model upgrades justify limit tightening; subscriptions feel like a deal until they don't.</p>
+  <div class="tiers">
+    <div class="tier-row">
+      <div class="tier-price">$0</div>
+      <div class="tier-name">Free</div>
+      <div class="tier-desc">Daily limits, basic models, enough to integrate, not enough to rely on</div>
+      <div class="tier-trap">Hook phase</div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-price">$20/mo</div>
+      <div class="tier-name">Pro</div>
+      <div class="tier-desc">Claude Code, Cowork, extended thinking, power users hit limits within hours of agent tasks</div>
+      <div class="tier-trap">Dependency forms</div>
+    </div>
+    <div class="tier-row tier-highlight">
+      <div class="tier-price">$100/mo</div>
+      <div class="tier-name">Max 5×</div>
+      <div class="tier-desc">5× Pro limits, covers most individual developers; Genspark credits 10× more consumed year-on-year</div>
+      <div class="tier-trap">Lock-in deepens</div>
+    </div>
+    <div class="tier-row tier-highlight">
+      <div class="tier-price">$200/mo</div>
+      <div class="tier-name">Max 20×</div>
+      <div class="tier-desc">20× Pro limits, still runs out for heavy agent builders. Perplexity, Cursor, Lovable all moved to variable credits</div>
+      <div class="tier-trap">High switching cost</div>
+    </div>
+  </div>
+  <div class="addiction-note">
+    Anecdote (one power user): <strong>10B tokens in 8 months</strong>, ~$15K at API rates vs. ~$800 on Max. Not structural evidence, but illustrative of the gap a heavy user can open. Switching is possible (OpenAI, Gemini, open-weights); the real cost is codebase familiarity and prompt-tuning, not a literal lock-in.
+  </div>
+</div>
+</section>
+
+<!-- ═══ 5: THE BLACK MIRROR EFFECT ════════════════════════════════════════ -->
+<section id="s5" data-label="Black Mirror Effect">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Dependency economics</span>
+    <span class="slide-num">5 / 12</span>
+  </div>
+  <p class="h2">The <em>Black Mirror</em> effect, on frontier platforms.</p>
+  <p class="bm-ref">Ref: "Joan Is Awful" (S6E1). Caveat: this dynamic applies where you've chosen a single frontier lab. Multi-model and open-weight deployments have materially lower dependency.</p>
+  <div class="bm-steps">
+    <div class="bm-step">
+      <div class="bm-step-n">01</div>
+      <div class="bm-step-body">
+        <div class="bm-step-title">You sign up. You agreed to the terms.</div>
+        <div class="bm-step-desc">Like Joan discovering her life is being streamed by Streamberry, she agreed somewhere in the ToS. You integrated the model without reading the pricing footnotes.</div>
+        <div class="bm-step-ep">↳ The value is real. The contract is buried.</div>
+      </div>
+    </div>
+    <div class="bm-step">
+      <div class="bm-step-n">02</div>
+      <div class="bm-step-body">
+        <div class="bm-step-title">You can't opt out. Your workflows already depend on it.</div>
+        <div class="bm-step-desc">Every agent, prompt chain, and team process runs through the platform. Switching means rebuilding from zero. The model knows your codebase. You don't want to start over.</div>
+        <div class="bm-step-ep">↳ Opting out costs more than staying in.</div>
+      </div>
+    </div>
+    <div class="bm-step">
+      <div class="bm-step-n">03</div>
+      <div class="bm-step-body">
+        <div class="bm-step-title">Each upgrade raises the floor, and your dependency.</div>
+        <div class="bm-step-desc">Models improve. Limits tighten. API costs rise with every new flagship. You can't go back to the dumber model; it no longer handles your use cases. The escalator only goes up.</div>
+        <div class="bm-step-ep">↳ Not a trap. A ratchet. Each step is rational. The direction is fixed.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 5: THE ANTHROPIC LEAK ══════════════════════════════════════════════ -->
+<section id="s6" data-label="The Anthropic Leak">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Recent signal</span>
+    <span class="slide-num">6 / 12</span>
+  </div>
+  <p class="h2" style="margin-bottom:32px">Screenshots of an internal Lovable-like tool leaked. Days later, Claude Design launched.</p>
+  <div class="leak-box">
+    <div class="lk-label">Online leak · April 2026</div>
+    <div class="lk-text">Screenshots surfaced online of an <strong>internal Anthropic vibe-coding tool</strong>, functionally similar to Lovable. Claude Design shipped shortly after. Reports also suggest Claude Cowork was largely built by Claude itself. The platform is eating its own supply chain.</div>
+  </div>
+  <div class="implications">
+    <div class="impl-row">
+      <div class="impl-icon">→</div>
+      <div class="impl-text"><strong>For Lovable:</strong> prompt-to-app now appears to be an internal Anthropic capability that ships as a product. Reported ARR ($100M–$200M range) doesn't disappear, but the supplier-turned-competitor risk is explicit.</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-icon">→</div>
+      <div class="impl-text"><strong>For design tool startups:</strong> Mike Krieger (Anthropic CPO) resigned from Figma's board the same week Claude Design launched. Factual; causal link is inference.</div>
+    </div>
+    <div class="impl-row">
+      <div class="impl-icon">→</div>
+      <div class="impl-text"><strong>For investors:</strong> every wrapper should assume its supplier ships an in-house version of the core feature within 12 to 18 months.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 6: NOT REPLACEMENT, COMPRESSION ═════════════════════════════════ -->
+<section id="s7" data-label="Not Replacement, Compression">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">The nuanced view</span>
+    <span class="slide-num">7 / 12</span>
+  </div>
+  <p class="h2" style="margin-bottom:32px">Claude won't replace everything. But it will compress everything thin.</p>
+  <div class="two-col">
+    <div>
+      <div class="col-head red">Likely compressed</div>
+      <div class="col-body">
+        <div class="col-item"><strong>Horizontal UI wrappers</strong><span>A prettier chat interface isn't a product. Claude Cowork already is one.</span></div>
+        <div class="col-item"><strong>Generic document generation</strong><span>Claude Design + Office integrations cover most of the use case.</span></div>
+        <div class="col-item"><strong>General-purpose agents</strong><span>Horizontal "do anything" agents now compete with Claude Managed Agents on the same primitive.</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="col-head green">More defensible (not immune)</div>
+      <div class="col-body">
+        <div class="col-item"><strong>Regulated vertical workflows</strong><span>Harvey, Abridge, Hippocratic: proprietary data + compliance + domain trust. Hardest for a horizontal platform to replicate.</span></div>
+        <div class="col-item"><strong>Self-hosted infrastructure</strong><span>n8n: different buyer (privacy-first SMB/mid-market). Durable business, not obviously a $10B outcome.</span></div>
+        <div class="col-item"><strong>Developer context lock-in</strong><span>Cursor, Replit: accumulated codebase understanding. 12–24 month lead, not a structural moat, Windsurf's carve-up proved IDEs are acquirable.</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="bottom-note"><strong>The honest divide:</strong> regulation, proprietary data, and deployment-model choice are the only defenses that don't decay each time Claude ships an update. Everything else is a lead.</p>
+</div>
+</section>
+
+<!-- ═══ 8: THE VIABILITY QUESTION ═══════════════════════════════════════ -->
+<section id="s8b" data-label="Viability Question">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Fast revenue, unclear durability</span>
+    <span class="slide-num">8 / 12</span>
+  </div>
+  <p class="h2" style="font-size:48px">$400M ARR in 18 months. <em>Is any of it durable?</em></p>
+  <p class="body-md" style="margin-top:10px; margin-bottom:16px; font-size:24px">Unprecedented pace. Open question: does it compound, or decay the moment the supplier ships the same feature?</p>
+  <div class="alpha-cases">
+    <div class="alpha-case">
+      <div class="ac-company">Lovable</div>
+      <div class="ac-body">
+        <div class="ac-event">~$100M to $200M reported ARR, $983M raised, $6.6B valuation. Core product (prompt-to-app) now exists as an internal Anthropic tool per the April leak.</div>
+      </div>
+      <div class="ac-impact amber">Supplier risk</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Genspark</div>
+      <div class="ac-body">
+        <div class="ac-event">$200M ARR with 46 employees ($4.3M per head). Staggering efficiency. Super Agent overlaps directly with Claude Cowork + Managed Agents at $20/mo.</div>
+      </div>
+      <div class="ac-impact amber">Thin differentiation</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Cursor</div>
+      <div class="ac-body">
+        <div class="ac-event">Raising at $50B, forecasting $6B ARR by year-end. Investors openly concerned about being replaced by Anthropic's Claude Code, its own supplier.</div>
+      </div>
+      <div class="ac-impact amber">Multiple at risk</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Cognition</div>
+      <div class="ac-body">
+        <div class="ac-event">$10.2B valuation on ~$73M ARR. 140x multiple. Absorbed Windsurf's IDE to shore up the moat.</div>
+      </div>
+      <div class="ac-impact red">Priced for perfection</div>
+    </div>
+  </div>
+  <div class="alpha-thesis" style="font-size:24px;line-height:1.4;margin-top:14px;padding:16px 24px;background:var(--ink);color:var(--bg)">This year's revenue priced the category being open. Next year's prices whether <strong>it stays open once the supplier ships the feature.</strong></div>
+</div>
+</section>
+
+<!-- ═══ 9: INVESTOR ALPHA PROBLEM ════════════════════════════════════════ -->
+<section id="s8" data-label="Investor Alpha Problem">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Capturing alpha</span>
+    <span class="slide-num">9 / 12</span>
+  </div>
+  <p class="h2" style="margin-bottom:32px">One model update can erase years of moat. How do you price that risk?</p>
+  <div class="alpha-cases">
+    <div class="alpha-case">
+      <div class="ac-company">Figma</div>
+      <div class="ac-body">
+        <div class="ac-event">IPO'd Jul 2025. Claude Design launches Apr 2026; Krieger exits the board. Parity is years away, but the multiple compresses the day the category becomes contested.</div>
+      </div>
+      <div class="ac-impact amber">Multiple risk</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Tome</div>
+      <div class="ac-body">
+        <div class="ac-event">$82M raised for AI presentations. Category absorbed by native model integrations; company pivoted to an adjacent product.</div>
+      </div>
+      <div class="ac-impact red">Pivoted</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Windsurf</div>
+      <div class="ac-body">
+        <div class="ac-event">$243M raised, $1.25B valuation. Carved up in 2025: Google acqui-hired co-founders, Cognition took the IDE.</div>
+      </div>
+      <div class="ac-impact amber">Acqui-hired</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Copy.ai</div>
+      <div class="ac-body">
+        <div class="ac-event">$17M raised. Consumer writing absorbed into ChatGPT and Claude. Acquired 2025 at undisclosed terms.</div>
+      </div>
+      <div class="ac-impact red">Acquired</div>
+    </div>
+    <div class="alpha-case">
+      <div class="ac-company">Manus AI</div>
+      <div class="ac-body">
+        <div class="ac-event">Defined the general-purpose agent category. Reported $2.5B strategic exit (figure unconfirmed), a tail outcome, not a median one.</div>
+      </div>
+      <div class="ac-impact amber">Tail exit</div>
+    </div>
+  </div>
+  <div class="alpha-thesis">Honest pattern: <strong>most wrappers chasing "build fast, get acquired" don't.</strong> Visible exits are survivorship bias. Real alpha sits in workflows the platform can't replicate, or in pricing the multiple compression.</div>
+</div>
+</section>
+
+<!-- ═══ 8: WHAT HAS A MOAT ════════════════════════════════════════════════ -->
+<section id="s9" data-label="What Has a Moat">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Moat analysis</span>
+    <span class="slide-num">10 / 12</span>
+  </div>
+  <p class="h2" style="margin-bottom:12px">Two real moats. Two leads dressed up as moats.</p>
+  <p class="body-md" style="margin-bottom:32px">Being honest about which is which is the whole investment question.</p>
+  <div class="moat-grid">
+    <div class="moat-cell strong">
+      <div class="mc-label">Moat · durable</div>
+      <div class="mc-title">Regulated vertical workflow</div>
+      <div class="mc-desc">Proprietary data + compliance + accountable outcomes. A horizontal platform can't ship HIPAA/FINRA/bar-admissible workflows as a feature without years of domain investment.</div>
+      <div class="mc-ex">→ Harvey, Abridge, Hippocratic, Sierra</div>
+    </div>
+    <div class="moat-cell strong">
+      <div class="mc-label">Moat · durable</div>
+      <div class="mc-title">Deployment-model choice</div>
+      <div class="mc-desc">Self-hosted, open-source, or on-prem. Addresses a buyer frontier labs structurally can't serve (privacy, air-gap, data residency). Narrow but defensible.</div>
+      <div class="mc-ex">→ n8n, open-weight stacks</div>
+    </div>
+    <div class="moat-cell">
+      <div class="mc-label">Lead · 12–24 mo</div>
+      <div class="mc-title">Developer context lock-in</div>
+      <div class="mc-desc">Codebase indexing + UX polish buys time, not permanence. Windsurf's carve-up showed IDEs are acquirable. Churn follows the better tool.</div>
+      <div class="mc-ex">→ Cursor, Replit (contested)</div>
+    </div>
+    <div class="moat-cell">
+      <div class="mc-label">Lead · fragile</div>
+      <div class="mc-title">Own-model differentiation</div>
+      <div class="mc-desc">Frontier training now costs $10B+/year. Subscale labs without a distribution advantage race a cost curve they can't win. Useful as an exit narrative, rarely as a standalone business.</div>
+      <div class="mc-ex">→ Poolside, most "vertical model" plays</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 9: THE 3 PATHS ════════════════════════════════════════════════════ -->
+<section id="s10" data-label="Three Paths Forward">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Evolution framework</span>
+    <span class="slide-num">11 / 12</span>
+  </div>
+  <p class="h2" style="margin-bottom:12px">Three paths for wrappers under platform pressure.</p>
+  <p class="body-md" style="margin-bottom:32px">The question isn't whether wrappers survive. It's which strategy gives them durable positioning as Anthropic expands into every layer.</p>
+  <div class="paths">
+    <div class="path-col">
+      <div class="path-head p1">
+        <div class="path-n">Path 01</div>
+        <div class="path-title">Go Deep Vertical</div>
+      </div>
+      <div class="path-body"><div class="path-points"><div class="path-point"><strong>Own a domain, not a modality</strong>Build for one industry's specific workflow, data model, compliance need, and terminology.</div>
+        <div class="path-point"><strong>Claude can't replicate this</strong>Generic horizontal tools lose. Domain-specific tools with proprietary data win.</div></div><div class="path-example">Sierra (CS agents), Harvey (legal), Abridge (medical)</div>
+      </div>
+    </div>
+    <div class="path-col">
+      <div class="path-head p2">
+        <div class="path-n">Path 02</div>
+        <div class="path-title">Become Infrastructure</div>
+      </div>
+      <div class="path-body"><div class="path-points"><div class="path-point"><strong>Multi-model, multi-tool</strong>Don't bet on one model. Orchestrate all of them. Become the layer above the AI providers.</div>
+        <div class="path-point"><strong>Sell reliability, not magic</strong>Enterprise buys predictability, auditability, and deployment control over raw capability.</div></div><div class="path-example">n8n, Glean, Replit (cloud IDE)</div>
+      </div>
+    </div>
+    <div class="path-col">
+      <div class="path-head p3">
+        <div class="path-n">Path 03</div>
+        <div class="path-title">Prove & Exit</div>
+      </div>
+      <div class="path-body"><div class="path-points"><div class="path-point"><strong>Define the category fast</strong>Win users, prove TAM, get on the acquisition short-list before the platform ships in-house.</div>
+        <div class="path-point"><strong>Base rate is brutal</strong>≥$1B outcomes are &lt;5% of the cohort. The visible exits (Manus, Windsurf) are the survivors, most wind down quietly.</div></div><div class="path-example">Tail outcome, not a plan</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ 10: THE REAL QUESTION ══════════════════════════════════════════════ -->
+<section id="s11" data-label="The Real Question">
+<div class="slide-inner">
+  <div class="label-row">
+    <span class="eyebrow">Investor thesis</span>
+    <span class="slide-num">12 / 12</span>
+  </div>
+  <p class="h2">This is not SaaS vs. agentic.<br>It's about <em>which layer</em> you own.</p>
+  <div class="thesis-points">
+    <div class="tp">
+      <div class="tp-n">01</div>
+      <div class="tp-txt"><strong>Capital isn't the signal</strong>. $14B+ priced VC conviction. The next 24 months price outcomes. Money raised doesn't equal value kept.</div>
+    </div>
+    <div class="tp">
+      <div class="tp-n">02</div>
+      <div class="tp-txt"><strong>The supply chain is collapsing into the platform</strong>. Claude Design followed the leak of an internal Lovable-equivalent. Cowork was largely built by Claude itself. Suppliers now make in-house what they used to buy.</div>
+    </div>
+    <div class="tp">
+      <div class="tp-n">03</div>
+      <div class="tp-txt"><strong>Durable alpha is narrow</strong>. Regulated workflows, proprietary data, enterprise contracts, deployment models frontier labs can't serve. Everything else is a lead with a timer.</div>
+    </div>
+    <div class="tp">
+      <div class="tp-n">04</div>
+      <div class="tp-txt"><strong>The wrapper era is stratifying, not ending</strong>. A few become platforms. More become features. Most become nothing. Knowing which tier you're in is the whole game.</div>
+    </div>
+  </div>
+  <div class="closing">
+    Anthropic isn't replacing startups. <strong>It's forcing every AI company to articulate what they actually own</strong>, and the ones that can answer honestly will be worth far more for having done so.
+  </div>
+</div>
+</section>
+
+</deck-stage>
+</body>
+</html>
